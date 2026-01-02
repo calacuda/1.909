@@ -14,7 +14,10 @@ members = ["xtask"]
 crate-type = ["cdylib"]
 
 [dependencies]
+hound = "3.5.1"
 nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", features = ["assert_process_allocs"] }
+rubato = "0.13"
+rustc-hash = { version = "2.1.1", features = ["nightly"] }
 
 [profile.release]
 lto = "thin"

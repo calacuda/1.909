@@ -1,23 +1,25 @@
 #[derive(Clone, Copy, PartialOrd, PartialEq)]
 pub struct PlayingSample {
-    pub sample: usize,
+    pub sample: (usize, usize),
     pub position: usize,
     sample_len: usize,
     pub gain: f32,
+    pub done: bool,
 }
 
 impl PlayingSample {
-    pub fn new(sample: usize, sample_len: usize, gain: f32) -> Self {
+    pub fn new(sample: (usize, usize), sample_len: usize, gain: f32) -> Self {
         Self {
             sample,
             position: 0,
             sample_len,
             gain,
+            done: false,
         }
     }
 
     pub fn is_done(&self) -> bool {
-        self.position >= self.sample_len
+        self.position >= self.sample_len || self.done
     }
 
     pub fn step(&mut self) -> Option<usize> {
