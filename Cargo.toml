@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Calacuda <pls-dont-email-me>"]
 license = "GPL-3.0-or-later"
-homepage = "env!("CARGO_PKG_HOMEPAGE")"
+homepage = "https://github.com/calacuda/1.909"
 description = "sample based, 909 style drum machine"
 
 [workspace]
@@ -14,12 +14,7 @@ members = ["xtask"]
 crate-type = ["cdylib"]
 
 [dependencies]
-# Remove the `assert_process_allocs` feature to allow allocations on the audio
-# thread in debug builds.
 nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", features = ["assert_process_allocs"] }
-# Uncomment the below line to disable the on-by-default VST3 feature to remove
-# the GPL compatibility requirement
-# nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", default-features = false, features = ["assert_process_allocs"] }
 
 [profile.release]
 lto = "thin"
