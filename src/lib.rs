@@ -1,6 +1,8 @@
 use nih_plug::prelude::*;
 use std::sync::Arc;
 
+pub mod playing_sample;
+
 // This is a shortened version of the gain example with most comments removed, check out
 // https://github.com/robbert-vdh/nih-plug/blob/master/plugins/examples/gain/src/lib.rs to get
 // started
@@ -80,7 +82,6 @@ impl Plugin for OneNine {
         names: PortNames::const_default(),
     }];
 
-
     const MIDI_INPUT: MidiConfig = MidiConfig::None;
     const MIDI_OUTPUT: MidiConfig = MidiConfig::None;
 
@@ -146,7 +147,7 @@ impl ClapPlugin for OneNine {
 }
 
 impl Vst3Plugin for OneNine {
-    const VST3_CLASS_ID: [u8; 16] = *b"1.909";
+    const VST3_CLASS_ID: [u8; 16] = *b"1.909\0\0\0\0\0\0\0\0\0\0\0";
 
     // And also don't forget to change these categories
     const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] =
