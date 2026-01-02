@@ -1,1 +1,6 @@
-https://bpb.gumroad.com/l/cassette-909-wav
+https://www.dropbox.com/scl/fi/dpnatc1kufhofpu4ro85x/808s-909s.rar?rlkey=355rs7locxe14x1yogtcsw63h&e=2&dl=0
+
+these samples are from:
+808s+909s.rar/Roland TR-909/Kit 01/*.WAV
+
+files were then converted to 48khz with ffmpeg
