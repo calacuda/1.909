@@ -4,7 +4,6 @@ pub struct PlayingSample {
     pub position: usize,
     sample_len: usize,
     pub gain: f32,
-    pub done: bool,
 }
 
 impl PlayingSample {
@@ -14,12 +13,11 @@ impl PlayingSample {
             position: 0,
             sample_len,
             gain,
-            done: false,
         }
     }
 
     pub fn is_done(&self) -> bool {
-        self.position >= self.sample_len || self.done
+        self.position >= self.sample_len
     }
 
     pub fn step(&mut self) -> Option<usize> {

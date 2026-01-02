@@ -280,7 +280,7 @@ impl Default for OneNineParams {
                 0.8,
                 FloatRange::Linear { min: 0.0, max: 1.0 },
             ),
-            c_i: IntParam::new("Clap Select", 0, IntRange::Linear { min: 0, max: 1 }),
+            c_i: IntParam::new("Clap Select", 1, IntRange::Linear { min: 0, max: 1 }),
             c_vol: FloatParam::new(
                 "Clap Volume",
                 0.8,
@@ -330,7 +330,7 @@ impl Plugin for OneNine {
     // The first audio IO layout is used as the default. The other layouts may be selected either
     // explicitly or automatically by the host or the user depending on the plugin API/backend.
     const AUDIO_IO_LAYOUTS: &'static [AudioIOLayout] = &[AudioIOLayout {
-        main_input_channels: NonZeroU32::new(1),
+        main_input_channels: NonZeroU32::new(0),
         main_output_channels: NonZeroU32::new(1),
 
         aux_input_ports: &[],
@@ -418,20 +418,21 @@ impl Plugin for OneNine {
                     note,
                     velocity,
                 } => {
-                    info!("playing {note}");
+                    // info!("playing {note}");
 
                     if let Some(sample_sel) = self.note_mappings.get(&note) {
                         let param = params[*sample_sel];
                         let sample_i = param.0 as usize;
                         let sample = (*sample_sel, sample_i);
                         let sample_len = self.samples[*sample_sel][sample_i].0[0].len();
-                        info!("sample: {sample:?}");
+                        // info!("sample: {sample:?}");
 
                         let sample_cursor =
                             PlayingSample::new(sample, sample_len, velocity * param.1);
                         self.playing_samples
-                            .retain(|sample_cursor| sample_cursor.sample != sample);
+                            .retain(|sample_cursor| sample_cursor.sample.0 != sample.0);
                         self.playing_samples.push(sample_cursor);
+                        // info!("")
                     }
                 }
                 NoteEvent::NoteOff {
@@ -465,7 +466,7 @@ impl Plugin for OneNine {
             let value = value.tanh();
 
             self.playing_samples
-                .retain(|sample_cursor| !sample_cursor.done);
+                .retain(|sample_cursor| !sample_cursor.is_done());
 
             for sample in channel_samples {
                 *sample = value;
